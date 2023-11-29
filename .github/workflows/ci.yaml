@@ -41,8 +41,8 @@ jobs:
       - name: Run commands on VM
         run: |
           docker login \
-          --username json_key \
-          --password ${{ secrets.YC_SA_JSON_CREDENTIALS }} \
+          --username oauth \
+          --password ${{ secrets.YC_OAUTH }} \
           cr.yandex
           
           if [ "$(docker ps -q)" ]; then
