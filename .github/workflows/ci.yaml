@@ -14,11 +14,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        work_dir:
-          - ./catgpt
 
     steps:
       - name: Clone repository to github actions
@@ -32,7 +27,7 @@ jobs:
 
       - name: Build image (Yandex Cloud)
         run: |
-          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG ./catgpt
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
       - name: Connect to VM via SSH
