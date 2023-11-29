@@ -48,7 +48,4 @@ jobs:
           if [ "$(docker ps -q)" ]; then
             sudo docker kill $(docker ps -q) &> /dev/null
           fi
-          if [ "$(docker ps -a -q)" ]; then
-            sudo docker kill $(docker ps -a -q) &> /dev/null
-          fi
           docker run -dp 80:8080 cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
