@@ -30,32 +30,21 @@ jobs:
           docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG ./catgpt
           docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
 
-      - name: Connect to VM via SSH
+      - name: Connect to VM via SSH and Run commands
         uses: appleboy/ssh-action@master
         with:
           host: 158.160.108.71
           username: ubuntu
           key: ${{ secrets.SSH_PASSWORD }}
           port: 22
-
-      - name: Run commands on VM
-        run: |
-          docker login \
-          --username oauth \
-          --password ${{ secrets.YC_OAUTH }} \
-          cr.yandex
+          script: |
+            docker login \
+            --username oauth \
+            --password ${{ secrets.YC_OAUTH }} \
+            cr.yandex
           
-          echo "before clean"
-          docker ps -a 
-          
-          if [ "$(docker ps -q)" ]; then
+            if [ "$(docker ps -q)" ]; then
             sudo docker kill $(docker ps -q) &> /dev/null
-          fi
+            fi
           
-          echo "after clean"
-          docker ps -a 
-          
-          docker run -dp 80:8080 cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
-          
-          echo "after run"
-          docker ps -a
+            docker run -dp 80:8080 cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
