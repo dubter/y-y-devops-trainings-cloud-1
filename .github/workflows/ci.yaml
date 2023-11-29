@@ -40,7 +40,7 @@ jobs:
 
       - name: Run commands on VM
         run: |
-          echo ${{ secrets.YC_SA_JSON_CREDENTIALS }} | docker login \
+          ${{ secrets.YC_SA_JSON_CREDENTIALS }} | docker login \
           --username json_key \
           --password-stdin \
           cr.yandex
