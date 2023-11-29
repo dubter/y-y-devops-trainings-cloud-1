@@ -40,10 +40,9 @@ jobs:
 
       - name: Run commands on VM
         run: |
-          export sa_key=${{ secrets.YC_SA_JSON_CREDENTIALS }}
-          echo $sa_key | docker login \
+          docker login \
           --username json_key \
-          --password-stdin \
+          --password ${{ secrets.YC_SA_JSON_CREDENTIALS }} \
           cr.yandex
           
           if [ "$(docker ps -q)" ]; then
