@@ -45,6 +45,4 @@ jobs:
             sudo docker kill $(docker ps -q) &> /dev/null
             fi
           
-            echo "log1: cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG"
-            echo log2: cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
             docker run -dp 80:8080 cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
