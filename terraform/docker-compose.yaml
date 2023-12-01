@@ -2,6 +2,15 @@ version: '3.7'
 services:
   catgpt:
     container_name: catgpt
-    image: "cr.yandex/crp39iivaksh2rut9bvi/catgpt"
+    image: "cr.yandex/${registry_id}/catgpt:3801834fe1f86504832430c00fd84444c2e77e3a"
     restart: always
     network_mode: "host"
+  unifiedagent:
+    container_name: unifiedagent
+    image: "cr.yandex/yc/unified-agent"
+    environment:
+      FOLDER_ID: ${folder_id}
+    restart: always
+    network_mode: "host"
+    volumes:
+      - /metrics:/etc/yandex/unified_agent/conf.d
