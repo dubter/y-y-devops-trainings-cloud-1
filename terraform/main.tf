@@ -29,15 +29,11 @@ locals {
   folder_id = "b1gufgphuc6t73bgr8ja"
   service-accounts = toset([
     "catgpt-sa",
-    "tf-sa",
     "catgpt-ig-sa"
   ])
   catgpt-sa-roles = toset([
     "container-registry.images.puller",
     "monitoring.editor",
-  ])
-  tf-sa-roles = toset([
-    "admin",
   ])
   catgpt-ig-sa-roles = toset([
     "compute.editor",
@@ -57,13 +53,6 @@ resource "yandex_resourcemanager_folder_iam_member" "catgpt-roles" {
   for_each  = local.catgpt-sa-roles
   folder_id = local.folder_id
   member    = "serviceAccount:${yandex_iam_service_account.service-accounts["catgpt-sa"].id}"
-  role      = each.key
-}
-
-resource "yandex_resourcemanager_folder_iam_member" "tf-roles" {
-  for_each  = local.tf-sa-roles
-  folder_id = local.folder_id
-  member    = "serviceAccount:${yandex_iam_service_account.service-accounts["tf-sa"].id}"
   role      = each.key
 }
 
